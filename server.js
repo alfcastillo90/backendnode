@@ -7,16 +7,18 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(router);
 
-router.get('/', function(req, res) {
-    console.log(`query ${JSON.stringify(req.query)}`)
-    console.log(`body ${JSON.stringify(req.body)}`)
-    res.send('Hello from get');
+router.get('/message', function(req, res) {
+    console.log(req.headers);
+    res.headers({
+        "custom-header": "Our custom value"
+    })
+    res.send('message list');
 });
 
-router.post('/', function(req, res) {
-    console.log(`query ${JSON.stringify(req.query)}`)
-    console.log(`body ${JSON.stringify(req.body)}`)
-    res.send('Hello from post');
+router.delete('/message', function(req, res) {
+    console.log(req.query);
+    console.log(req.body)
+    res.send('Hello deleted');
 });
 
 app.listen(3000);
