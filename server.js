@@ -1,6 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+
 const router = express.Router();
+const response = require('./network/response');
 
 var app = express();
 app.use(bodyParser.json());
@@ -12,13 +14,16 @@ router.get('/message', function(req, res) {
     res.headers({
         "custom-header": "Our custom value"
     })
-    res.send('message list');
+    
+    response.success(req, res, 'message list');
 });
 
 router.delete('/message', function(req, res) {
-    console.log(req.query);
-    console.log(req.body)
-    res.send('Hello deleted');
+    if (req.query.error == 'ok') {
+        response.error(req, res, 'Simulated error', 400)
+    } else {
+        response.success(req, res, 'message deleted', 201);
+    }
 });
 
 app.listen(3000);
