@@ -1,0 +1,20 @@
+{
+  "name": "backendnode",
+  "version": "0.1.0",
+  "description": "webchat like telegram, but beter",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "chat",
+    "telegram",
+    "server"
+  ],
+  "author": "Carlos Alfredo Castillo Rodriguez",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.20.0",
+    "express": "^4.18.1"
+  }
+}
