@@ -20,11 +20,13 @@ router.get('/message', function(req, res) {
 
 router.delete('/message', function(req, res) {
     if (req.query.error == 'ok') {
-        response.error(req, res, 'Simulated error', 400)
+        response.error(req, res, 'Simulated error', 500, 'It is just a simulation')
     } else {
         response.success(req, res, 'message deleted', 201);
     }
 });
+
+app.use('/app', express.static('public'))
 
 app.listen(3000);
 console.log(`application is on http://localhost:3000`);
