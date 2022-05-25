@@ -1,30 +1,12 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 
-const router = express.Router();
-const response = require('./network/response');
+const router = require('./network/routes');
 
 var app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}))
-app.use(router);
-
-router.get('/message', function(req, res) {
-    console.log(req.headers);
-    res.headers({
-        "custom-header": "Our custom value"
-    })
-    
-    response.success(req, res, 'message list');
-});
-
-router.delete('/message', function(req, res) {
-    if (req.query.error == 'ok') {
-        response.error(req, res, 'Simulated error', 500, 'It is just a simulation')
-    } else {
-        response.success(req, res, 'message deleted', 201);
-    }
-});
+router(app)
 
 app.use('/app', express.static('public'))
 
