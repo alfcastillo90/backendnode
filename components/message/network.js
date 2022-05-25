@@ -4,12 +4,11 @@ const response = require('../../network/response');
 const controller = require('./controller');
 
 router.get('/', function(req, res) {
-    console.log(req.headers);
-    res.headers({
-        "custom-header": "Our custom value"
+    controller.getMessages().then( messageList => {
+        response.success(req, res, messageList, 200)
+    }).catch(e => {
+        response.error(req, res, 'Unexpected Errror', 500,e)
     })
-    
-    response.success(req, res, 'message list');
 });
 
 router.delete('/', function(req, res) {
