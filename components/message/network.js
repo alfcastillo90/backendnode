@@ -4,26 +4,37 @@ const response = require('../../network/response');
 const controller = require('./controller');
 
 router.get('/', function(req, res) {
-    controller.getMessages().then( messageList => {
+    const filterMessages = req.query.user || null;
+    controller.getMessages(filterMessages).then( messageList => {
         response.success(req, res, messageList, 200)
     }).catch(e => {
         response.error(req, res, 'Unexpected Errror', 500,e)
     })
 });
 
-router.delete('/', function(req, res) {
-    if (req.query.error == 'ok') {
-        response.error(req, res, 'Simulated error', 500, 'It is just a simulation')
-    } else {
-        response.success(req, res, 'message deleted', 201);
-    }
+router.delete('/:id', function(req, res) {
+    controller.deleteMessage(req.params.id).then(() => {
+        response.success(req, res, 'message deleted suscessfully', 200);
+    }).catch(() => {
+        response.error(req, res, 'Internal server error', 500, e)
+    })
 });
 
 router.post('/', function(req, res) {
     controller.addMessage(req.body.user, req.body.message).then(() => {
         response.success(req, res, 'message created suscessfully', 200);
-    }).catch(e => {
+    }).catch(() => {
         response.error(req, res, 'Invalid information', 500, 'the fields must not be empty')
+    })
+})
+
+router.patch('/:id', function(req, res){
+    console.log(req.params.id);
+    
+    controller.updateMessage(req.params.id, req.body.message).then(() => {
+        response.success(req, res, 'message updated suscessfully', 200);
+    }).catch(e => {
+        response.error(req, res, 'Internal server error', 500, e)
     })
 })
 
