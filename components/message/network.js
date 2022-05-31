@@ -21,7 +21,7 @@ router.delete('/:id', function(req, res) {
 });
 
 router.post('/', function(req, res) {
-    controller.addMessage(req.body.user, req.body.message).then(() => {
+    controller.addMessage(req.body.chat, req.body.user, req.body.message).then(() => {
         response.success(req, res, 'message created suscessfully', 200);
     }).catch(() => {
         response.error(req, res, 'Invalid information', 500, 'the fields must not be empty')
