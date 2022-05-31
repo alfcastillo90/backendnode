@@ -1,12 +1,4 @@
-const db = require('mongoose');
 const Model = require('./model')
-
-
-db.connect("mongodb+srv://dev:dev@cluster0.z0tzn.mongodb.net/telegram?retryWrites=true&w=majority", {
-    useNewUrlParser: true
-});
-
-console.log(`database connected successfuly`)
 
 function addMessage(message) {
     const myMessage = new Model(message);
