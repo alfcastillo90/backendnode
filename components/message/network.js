@@ -1,7 +1,12 @@
 const express = require('express');
+const multer = require('multer')
 const router = express.Router();
 const response = require('../../network/response');
 const controller = require('./controller');
+
+const upload = multer({
+    dest: 'public/files'
+})
 
 router.get('/', function(req, res) {
     const filterMessages = req.query.user || null;
@@ -20,8 +25,9 @@ router.delete('/:id', function(req, res) {
     })
 });
 
-router.post('/', function(req, res) {
-    controller.addMessage(req.body.chat, req.body.user, req.body.message).then(() => {
+router.post('/',upload.single('file'), function(req, res) {
+    console.log(req.file);
+    controller.addMessage(req.body.chat, req.body.user, req.body.message, req.file).then(() => {
         response.success(req, res, 'message created suscessfully', 200);
     }).catch(() => {
         response.error(req, res, 'Invalid information', 500, 'the fields must not be empty')
